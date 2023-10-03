@@ -1,10 +1,12 @@
 using TodoListApi.Models;
+using TodoListApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var settings = builder.Configuration.GetSection("TodoListDatabase");
-builder.Services.Configure<TodoListDatabaseSettings>(settings);
+var settings = builder.Configuration.GetSection("TodoListDataBase");
+builder.Services.Configure<TodoListDataBaseSettings>(settings);
+builder.Services.AddSingleton<TaskService>();
 
 builder.Services.AddControllers();
 

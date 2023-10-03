@@ -7,21 +7,24 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace TodoListApi.Models
 {
-    public class Task
+    public class TaskModel
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
 
+        [BsonElement("task")]
         public string Task { get; set; } = null!;
         
-        public string Detail { get; set; } = null!;
+        [BsonElement("detail")]
+                public string Detail { get; set; } = null!;
 
+        [BsonElement("status")]
         public bool Status { get; set; }
 
         public string Category { get; set; } = null!;
 
         [BsonElement("sub task")]
-        public List<SubTask> SubTasks { get; set; }
+        public List<SubTaskModel>? SubTasks { get; set; }
     }
 }
