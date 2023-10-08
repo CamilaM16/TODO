@@ -1,0 +1,6 @@
+.form {
+    position: absolute;
+    top: 10vh;
+    width: 40vh;
+    z-index: 10;
+}
