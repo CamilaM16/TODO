@@ -21,6 +21,7 @@
 }
 
 .accordion-panel {
+    background-color: #8ba0fc2c;
     display: none;
     padding: 10px;
 }

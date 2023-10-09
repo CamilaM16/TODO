@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { TASK_URL } from "../../Services/listService";
 import { useTasksDispatch } from "../TaskContext";
 import ModalContainer from "../Modal/ModalContainer";
 
@@ -9,9 +11,12 @@ export function DeleteContent({ id }) {
   const close = () => setOpenDelete(false);
   const open = () => setOpenDelete(true);
   function remove() {
-    dispatch({
-      type: "deleted",
-      id: id,
+    axios.delete(`${TASK_URL}/${id}`).then(() => {
+      alert("Post deleted!");
+      dispatch({
+        type: "deleted",
+        id: id,
+      });
     });
     close();
   }

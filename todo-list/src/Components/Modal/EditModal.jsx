@@ -1,5 +1,7 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useTasksDispatch } from "../TaskContext";
+import { TASK_URL } from "../../Services/listService";
 import ModalContainer from "../Modal/ModalContainer";
 import Form from "../Form/Form";
 
@@ -9,12 +11,23 @@ export function EditModal({ taskItem }) {
 
   const close = () => setOpenEdit(false);
   const open = () => setOpenEdit(true);
-  
+
   function handleSubmit(task) {
-    dispatch({
-      type: "changed",
-      task: task,
-    });
+    axios
+      .put(`${TASK_URL}/${task.id}`, {
+        task: task.task,
+        detail: task.detail,
+        status: false,
+        category: "Simple Task",
+        subTasks: null,
+      })
+      .then(() => {
+        dispatch({
+          type: "changed",
+          task: task,
+        });
+      });
+
     close();
   }
   return (

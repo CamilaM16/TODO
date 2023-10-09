@@ -1,18 +1,32 @@
+import axios from "axios";
 import React from "react";
+import { TASK_URL } from "../../Services/listService";
 import { useTasksDispatch } from "../TaskContext";
 import "./InputText.css";
 
-
 export default function InputText() {
   const dispatch = useTasksDispatch();
-  const [text, setText] = React.useState('');
+  const [text, setText] = React.useState("");
 
   function addTask() {
-    dispatch({
-      type: "added",
-      task: text,
-      id: "132134",
-    });
+    if (text) {
+      axios
+        .post(TASK_URL, {
+          task: text,
+          status: false,
+          detail: "",
+          category: "Simple Task",
+        })
+        .then((response) => {
+          const currentTask = response.data;
+          dispatch({
+            type: "added",
+            task: currentTask.task,
+            id: currentTask.id,
+          });
+        });
+      setText("");
+    }
   }
 
   return (
@@ -23,7 +37,7 @@ export default function InputText() {
         name="text"
         placeholder="Add new task..."
         value={text}
-        onChange={e => setText(e.target.value)}
+        onChange={(e) => setText(e.target.value)}
       ></input>
       <button className="add-button" onClick={addTask}>
         Add task

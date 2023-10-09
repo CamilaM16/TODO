@@ -7,7 +7,7 @@ function InputText({ id, text, inputValue, setInputValue }) {
   return (
     <div className="mb-6">
       <label
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
         htmlFor={id}
       >
         {text}{" "}
@@ -16,9 +16,11 @@ function InputText({ id, text, inputValue, setInputValue }) {
         type="text"
         id={id}
         value={inputValue}
-        placeholder="Text..."
+        placeholder={"Enter a valid task"}
         onChange={handleChange}
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        className={`bg-gray-50 border ${
+          !inputValue ? "border-red-500" : "border-gray-300"
+        } text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
       />
     </div>
   );
@@ -26,19 +28,22 @@ function InputText({ id, text, inputValue, setInputValue }) {
 
 function Form({ taskItem, children, handleSubmit }) {
   const [titleValue, settitleValue] = useState(taskItem.task);
-  const [detailValue, setDetailValue] = useState(taskItem.detail);
+  const [detailValue, setDetailValue] = useState(taskItem.detail ?? "");
+
+  function submit(e) {
+    e.preventDefault();
+    if (titleValue && detailValue) {
+      handleSubmit({
+        id: taskItem.id,
+        task: titleValue,
+        detail: detailValue,
+      });
+    }
+  }
 
   if (taskItem) {
     return (
-      <form
-        onSubmit={() =>
-          handleSubmit({
-            id: taskItem.id,
-            task: titleValue,
-            detail: detailValue,
-          })
-        }
-      >
+      <form onSubmit={submit}>
         <InputText
           id={"title"}
           text={"Task:"}
@@ -49,7 +54,7 @@ function Form({ taskItem, children, handleSubmit }) {
           id={"description"}
           text={"Description:"}
           inputValue={detailValue}
-          setDetailValue={setDetailValue}
+          setInputValue={setDetailValue}
         />
         {children}
       </form>

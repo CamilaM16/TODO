@@ -48,7 +48,7 @@ export default function TaskItem({ taskItem }) {
           </div>
         </label>
         <div className="accordion-panel">
-          <p>{taskItem.detail}</p>
+          <p className="font-normal text-gray-700 dark:text-gray-400">{taskItem.detail}</p>
         </div>
       </div>
     </>
