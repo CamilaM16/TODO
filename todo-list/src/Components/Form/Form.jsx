@@ -1,59 +1,60 @@
-import React from "react";
-function InputText({ id, text, dafaultValue }) {
+import React, { useState } from "react";
+
+function InputText({ id, text, inputValue, setInputValue }) {
+  const handleChange = (event) => {
+    setInputValue(event.target.value);
+  };
   return (
-    <div>
-      <label htmlFor={id}>{text}</label>
-      <input type="text" id={id} value={dafaultValue} placeholder="Text..." />
+    <div className="mb-6">
+      <label
+        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        htmlFor={id}
+      >
+        {text}{" "}
+      </label>
+      <input
+        type="text"
+        id={id}
+        value={inputValue}
+        placeholder="Text..."
+        onChange={handleChange}
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      />
     </div>
   );
 }
 
-function BaseForm({ taskItem, children }) {
+function Form({ taskItem, children, handleSubmit }) {
+  const [titleValue, settitleValue] = useState(taskItem.task);
+  const [detailValue, setDetailValue] = useState(taskItem.detail);
+
   if (taskItem) {
     return (
-      <div>
-        <InputText id={"title"} text={"Task:"} dafaultValue={taskItem.task} />
+      <form
+        onSubmit={() =>
+          handleSubmit({
+            id: taskItem.id,
+            task: titleValue,
+            detail: detailValue,
+          })
+        }
+      >
+        <InputText
+          id={"title"}
+          text={"Task:"}
+          inputValue={titleValue}
+          setInputValue={settitleValue}
+        />
         <InputText
           id={"description"}
           text={"Description:"}
-          dafaultValue={taskItem.description}
+          inputValue={detailValue}
+          setDetailValue={setDetailValue}
         />
         {children}
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <InputText id={"title"} text={"Task:"} />
-        <InputText id={"description"} text={"Description:"} />
-        {children}
-      </div>
+      </form>
     );
   }
-}
-
-function Form({ tittle, taskItem, setOpen }) {
-  function handleSubmit(event) {
-    event.preventDefault();
-    setOpen(false);
-    console.log("Form submitted");
-  }
-
-  function handleAbort(event) {
-    setOpen(false);
-    console.log("Form aborted");
-  }
-  return (
-    <form className="form" onSubmit={handleSubmit} onAbort={handleAbort}>
-      <h1>{tittle}</h1>
-      <BaseForm taskItem={taskItem}>
-        <div>
-          <button type="submit">Save</button>
-          <button type="cancel">Save</button>
-        </div>
-      </BaseForm>
-    </form>
-  );
 }
 
 export default Form;

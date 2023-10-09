@@ -1,0 +1,27 @@
+.add-container {
+    min-width: 20vh;
+    width: 80vh;
+    display: inline-flex;
+    position: relative;
+}
+
+.textInput {
+    flex: 2; 
+    border: 1px solid #563af75b;
+    border-radius: 4px;
+    height: 4vh;
+}
+
+button {
+    background-color: #3249cc;
+    padding: 4px 8px;
+    color: white;
+    border-radius: 4px;
+}
+
+.add-button {
+    flex: 1; 
+    background-color: #673ae4;
+    margin: 0px 10px;
+    height: 4vh;
+}

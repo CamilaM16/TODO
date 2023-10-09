@@ -1,0 +1,57 @@
+.accordion {
+    display: flex;
+    flex-direction: column;
+    max-width: 80vh;
+    margin: 20px auto;
+}
+
+.accordion-item {
+    border-radius: 5px;
+    border: 1px solid #24419e71;
+    margin: 5px;
+    color: #011557;
+}
+
+.accordion-header {
+    background-color: #ffffff2c;
+    border-radius: 5px;
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.accordion-panel {
+    display: none;
+    padding: 10px;
+}
+
+.task-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+input[type="checkbox"],
+h2,
+button {
+    margin-right: 10px;
+}
+
+.button-container {
+    position: absolute;
+    right: 0;
+}
+
+/* Style to display the active panel */
+input[type="radio"]:checked+.accordion-header+.accordion-panel {
+    display: block;
+}
+
+input[type="checkbox"]:checked+.title-task {
+    text-decoration: line-through;
+}
+
+.invisible-radio {
+    opacity: 0; /* O puedes usar visibility: hidden; */
+    position: absolute; /* Evita que ocupe espacio en el diseño */
+}

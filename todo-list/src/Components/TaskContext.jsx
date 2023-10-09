@@ -33,8 +33,8 @@ function tasksReducer(tasks, action) {
         ...tasks,
         {
           id: action.id,
-          text: action.text,
-          done: false,
+          task: action.task,
+          status: false,
         },
       ];
     }
