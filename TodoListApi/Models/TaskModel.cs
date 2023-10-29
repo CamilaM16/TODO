@@ -22,6 +22,7 @@ namespace TodoListApi.Models
         [BsonElement("status")]
         public bool Status { get; set; }
 
+        [BsonElement("category")]
         public string Category { get; set; } = null!;
 
         [BsonElement("sub task")]
