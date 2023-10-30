@@ -13,6 +13,10 @@ export function EditModal({ taskItem }) {
   const open = () => setOpenEdit(true);
 
   function handleSubmit(task) {
+    dispatch({
+      type: "changed",
+      task: task,
+    });
     axios
       .put(`${TASK_URL}/${task.id}`, {
         task: task.task,
@@ -21,11 +25,8 @@ export function EditModal({ taskItem }) {
         category: "Simple Task",
         subTasks: null,
       })
-      .then(() => {
-        dispatch({
-          type: "changed",
-          task: task,
-        });
+      .catch(() => {
+        alert("Error: Updating Task! on Data Base :(");
       });
 
     close();

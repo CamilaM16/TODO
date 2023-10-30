@@ -1,12 +1,13 @@
 import axios from "axios";
 import React from "react";
 import { TASK_URL } from "../../Services/listService";
-import { useTasksDispatch } from "../TaskContext";
+import { useTasksDispatch, useTotalContext } from "../TaskContext";
 import "./InputText.css";
 
 export default function InputText() {
   const dispatch = useTasksDispatch();
   const [text, setText] = React.useState("");
+  const { total, setTotal } = useTotalContext();
 
   function addTask() {
     if (text) {
@@ -19,11 +20,15 @@ export default function InputText() {
         })
         .then((response) => {
           const currentTask = response.data;
+          setTotal(total + 1);
           dispatch({
             type: "added",
             task: currentTask.task,
             id: currentTask.id,
           });
+        })
+        .catch(() => {
+          alert("Error: Adding Task! on Data Base:(");
         });
       setText("");
     }
